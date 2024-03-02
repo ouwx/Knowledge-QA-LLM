@@ -25,6 +25,7 @@ class Qwen7B_Chat:
                 {"temperature": temperature, "top_p": top_p, "max_length": max_length}
             )
         req = requests.post(self.api_url, data=json.dumps(data), timeout=60)
+        print(json.dumps(data))
         try:
             rdata = req.json()
             if rdata["status"] == 200:

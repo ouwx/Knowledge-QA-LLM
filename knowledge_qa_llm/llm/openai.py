@@ -7,7 +7,7 @@ from typing import List, Optional
 import requests
 
 
-class BaiChuan7B:
+class Openai:
     def __init__(self, api_url: str = None):
         self.api_url = api_url
 
@@ -15,7 +15,14 @@ class BaiChuan7B:
         if not history:
             history = []
 
-        data = {"input_text": prompt}
+        data = {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        }
         if kwargs:
             temperature = kwargs.get("temperature", 0.1)
             top_p = kwargs.get("top_p", 0.7)
@@ -24,12 +31,16 @@ class BaiChuan7B:
             data.update(
                 {"temperature": temperature, "top_p": top_p, "max_length": max_length}
             )
-        req = requests.post(self.api_url, data=json.dumps(data), timeout=60)
+        # 设置请求头
+        headers = {
+            "Content-Type": "application/json"
+        }
         print(json.dumps(data))
+        req = requests.post(self.api_url, data=json.dumps(data),headers=headers, timeout=60)
         try:
             rdata = req.json()
-            if rdata["status"] == 200:
-                return rdata["response"]
+            if rdata["choices"] !='':
+                return rdata["choices"][0]["message"]["content"]
             return "网络出错"
         except Exception as e:
             return f"网络出错:{e}"
@@ -38,7 +49,7 @@ class BaiChuan7B:
 if __name__ == "__main__":
     prompt = "你是谁？"
     history = []
-    t = BaiChuan7B()
+    t = Openai()
 
     res = t(prompt, history)
     print(res)

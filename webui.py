@@ -77,13 +77,13 @@ def init_ui_db():
     btn_upload = st.sidebar.button("上传文档并加载")
     if btn_upload:
         time_stamp = get_timestamp()
-        doc_dir = Path(upload_dir) / time_stamp
+        #doc_dir = Path(upload_dir) / time_stamp
+        doc_dir = Path(upload_dir)
+        mkdir(doc_dir)
 
         tips("正在上传文件到平台中...", icon="⏳")
         for file_data in uploaded_files:
             bytes_data = file_data.getvalue()
-
-            mkdir(doc_dir)
             save_path = doc_dir / file_data.name
             with open(save_path, "wb") as f:
                 f.write(bytes_data)

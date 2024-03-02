@@ -6,17 +6,19 @@ LLM_API:
     api_type: aistudio
     access_token: your_token
   Qwen7B_Chat:
-    api_url: your_api
+    api_url: http://192.168.1.2:1234/v1/completions
   ChatGLM2_6B:
     api_url: your_api
   BaiChuan7B:
-    api_url: your_api
+    api_url: http://192.168.1.2:1234/v1/chat/completions
   InternLM_7B:
     api_url: your_api
+  Openai:
+    api_url: http://192.168.1.2:1234/v1/chat/completions
 
 DEFAULT_PROMPT: 问题是：$query，从下面文章里，找出能回答以上问题的答案。如果文中没有答案，回答“没找到答案”。 文章：$context\n
 
-upload_dir: assets/raw_upload_files
+upload_dir: assets/upload_dir
 vector_db_path: assets/db/DefaultVector.db
 
 encoder_batch_size: 16
